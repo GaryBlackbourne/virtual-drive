@@ -1,0 +1,47 @@
+* Creating virtual encrypted filesystem for work
+
+** Init
+
+#+begin_src bash
+  
+  truncate --size=20G image.img               # create a file with given size
+  cryptsetup luksFormat image.img             # encrypt file
+  sudo crytpsetup luksOpen image.img imagedev # open and mount as device
+  mkfs.ext4 /dev/mapper/imagedev              # create a filesystem on the decrypted device
+  sudo crytpsetup luksClose imagedev          # reencrypt and close the device
+
+#+end_src
+
+** Mount
+
+#+begin_src bash
+
+  sudo cryptsetup luksOpen image.img imagedev
+  sudo mount /dev/mapper/imagedev ~/mountpoint
+
+#+end_src
+
+** Unmount
+
+#+begin_src bash
+
+  sudo umount ~/mountpoint
+  sudo cryptsetup luksClose imagedev
+
+#+end_src
+
+
+** Misc
+
+This is how one mounts a file as a block device, and then detaches it
+#+begin_src bash
+
+  sudo losetup -f image.img  # Attach file as loopdevice
+  sudo losetup -d /dev/loop0 # Detach loop device
+  losetup -a                 # check attached loopdevices
+
+#+end_src
+
+
+
+
