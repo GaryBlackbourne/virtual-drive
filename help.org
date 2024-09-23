@@ -6,9 +6,9 @@
   
   truncate --size=20G image.img               # create a file with given size
   cryptsetup luksFormat image.img             # encrypt file
-  sudo crytpsetup luksOpen image.img imagedev # open and mount as device
+  sudo cryptsetup luksOpen image.img imagedev # open and mount as device
   mkfs.ext4 /dev/mapper/imagedev              # create a filesystem on the decrypted device
-  sudo crytpsetup luksClose imagedev          # reencrypt and close the device
+  sudo cryptsetup luksClose imagedev          # reencrypt and close the device
 
 #+end_src
 

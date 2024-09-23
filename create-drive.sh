@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 HELP=\
-    " This script must be used like this:
+    "This script must be used like this:
         ./create-drive.sh <name> <size>
         Size can be postfixed with K,M,G for larger sizes.
         "
@@ -22,8 +22,8 @@ fi
 
 truncate --size=${SIZE} ${NAME}.img          || exit 1 # create a file with given size
 cryptsetup luksFormat ${NAME}.img            || exit 1 # encrypt file
-sudo crytpsetup luksOpen ${NAME}.img ${NAME} || exit 1 # open and mount as device
+sudo cryptsetup luksOpen ${NAME}.img ${NAME} || exit 1 # open and mount as device
 mkfs.ext4 /dev/mapper/${NAME}                || exit 1 # create a filesystem on the decrypted device
-sudo crytpsetup luksClose ${NAME}            || exit 1 # reencrypt and close the device
+sudo cryptsetup luksClose ${NAME}            || exit 1 # reencrypt and close the device
 
 exit 0
