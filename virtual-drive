@@ -1,0 +1,51 @@
+#!/usr/bin/bash
+
+VERSION="0.1.0"
+
+PROJECT_ROOT=$(dirname $(realpath "$0"))
+
+# this must be sourced first
+source ${PROJECT_ROOT}/functions/config.sh
+source ${PROJECT_ROOT}/functions/help.sh
+source ${PROJECT_ROOT}/functions/create.sh
+source ${PROJECT_ROOT}/functions/delete.sh
+source ${PROJECT_ROOT}/functions/mount.sh
+source ${PROJECT_ROOT}/functions/unmount.sh
+source ${PROJECT_ROOT}/functions/list.sh
+
+mkdir -p "${DRIVES_DIR}"
+
+while [ $# -gt 0 ]; do
+    case "${1}" in
+        "version" | "--version" | "-v")
+            echo "${VERSION}"
+            ;;
+        "help" | "--help" | "-h")
+            print_help
+            ;;
+        "list")
+            list_drives
+            ;;
+        "create")
+            shift
+            create_drive $@
+            ;;
+        "delete")
+            shift
+            delete_drive $@
+            ;;
+        "mount")
+            shift
+            mount_drive $@
+            ;;
+        "unmount" | "umount")
+            shift
+            unmount_drive $@
+            ;;
+        *)
+            echo "Unrecognized Command: ${1}"
+            exit 1
+            ;;
+    esac
+    exit 0
+done
