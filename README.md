@@ -1,31 +1,42 @@
-# Encrypted Virtual Drive Generator
+# Encrypted Virtual Drive Manager
 
-This small project helps with creating and using an encrypted filesystem in a 
-single file. It works like a virtual pendrive, if attached, it behaves like a
-storage drive. After the work is done it can be unmounted, and reencrypted into
-a file. Useful for working with sensitive or buisness code, if you don't want to
-encrypt your entire workspace.
+This project helps with creating and using an encrypted filesystem in a single
+file. It works like a virtual pendrive, if attached, it behaves like a storage
+drive. After the work is done it can be unmounted, and reencrypted into a
+file. Useful for working with sensitive data like buisness code, if you don't
+want to encrypt your entire workspace.
 
-## How to use?
+## Usage
 
-### Generate an image
-Lets generate a drive. The script accepts two arguments, a name, and a size. 
-For example:
+An encrypted drive can be generated with the following command:
 
 ``` shell
-./create-drive.sh mydrive 20G
+virtual-drive create /mnt/mydrive 2G workdrive
 ```
-This will generate a `mydrive.img` file which is 20GB large. During generation 
-the encryption is also done, and an `ext4` filesystem is also generated. 
 
-### Mount or unmount the image
- 
-Set the mount point (`MNTPOINT`), name (`NAME`) and the image (`IMAGE`) in the `drive.sh` variables, then use:
+This will generate a `workdrive.img` file which is `2GB` large. The image is
+encrypted with a password and ready to be mounted. Currently only`ext4` 
+filesystem is supported. The image is referenced by its name given (without the
+extension).
+
+Available drives can be listed with the `list` command:
 
 ``` shell
-./drive.sh attach
-# or
-./drive.sh detach
+virtual-drive list
+```
+
+A drive can be deleted by the `delete` command:
+
+``` shell
+virtual-drive delete workdrive
+```
+
+The drive can be mounted and unmounted to it's specified mountpoint with the
+following commands:
+
+``` shell
+virtual-drive mount workdrive
+# do some work in the drive
+virtual-drive unmount workdrive
 ```
  
-This will mount or unmount the drive to a given mount point.
