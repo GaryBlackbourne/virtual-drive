@@ -1,3 +1,17 @@
 print_help() {
-    echo "commands: create, delete, list, mount, detach, help"
+    echo "virtual-drive - ${VERSION}"
+    echo ""
+    echo "Synopsis: virtual-drive <command> [arguments]"
+    echo ""
+    echo "Avaliable commands are: "
+    echo "  - create: creates a new drive"
+    echo "       usage: virtual-drive create <mountpoint> <size> <name>"
+    echo "  - delete: deletes an existing drive"
+    echo "       usage: virtual-drive delete <name>"
+    echo "  - mount: mounts an existing drive to it's mountpoint"
+    echo "       usage: virtual-drive mount <name>"
+    echo "  - unmount: unmounts a mounted drive"
+    echo "       usage: virtual-drive unmount <name>"
+    echo "  - list: lists all available drives, their mount points, sizes and state"
+    echo "  - help: prints this help text"
 }
