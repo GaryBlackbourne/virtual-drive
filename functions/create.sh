@@ -3,7 +3,23 @@
 set -e
 create_drive() {
 
-    local NAME="$1"
+    local MNTPOINT="${1}"
+    if [[ -z ${MNTPOINT} ]]; then
+        echo "no mount point given"
+        exit 1
+    fi
+    if [[ ! -d ${MNTPOINT} ]]; then
+        echo "mount point '${MNTPOINT}' is not a directory"
+        exit 1
+    fi
+
+    local SIZE="$2"
+    if [[ -z ${SIZE} ]]; then
+        echo "no size given"
+        exit 1
+    fi
+
+    local NAME="$3"
     if [[ -z ${NAME} ]]; then
         echo "no name given"
         exit 1
@@ -16,24 +32,8 @@ create_drive() {
         exit 1
     fi
 
-    local SIZE="$2"
-    if [[ -z ${SIZE} ]]; then
-        echo "no size given"
-        exit 1
-    fi
-
     if ! echo ${SIZE} | grep -qE "^[1-9][0-9]*[KMG]?$"; then
         echo "${SIZE} is not a valid size format"
-        exit 1
-    fi
-
-    local MNTPOINT="${3}"
-    if [[ -z ${MNTPOINT} ]]; then
-        echo "no mount point given"
-        exit 1
-    fi
-    if [[ ! -d ${MNTPOINT} ]]; then
-        echo "mount point '${MNTPOINT}' is not a directory"
         exit 1
     fi
 
