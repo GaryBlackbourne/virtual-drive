@@ -1,11 +1,13 @@
 
 list_drives() {
     for NAME in $(ls ${DRIVES_DIR}); do
+        FILE=$
         echo -n ${NAME}
         echo -n " -> "
-        echo -n $(readlink -f ${DRIVES_DIR}/${NAME}/mountpoint)
+        echo -n "$(readlink -f ${DRIVES_DIR}/${NAME}/mountpoint)"
         echo -n " :: "
-
+        echo -n " $(stat -c %s ${DRIVES_DIR}/${NAME}/${NAME}.img | numfmt --to=iec)"
+        echo -n " :: "
         MOUNTED="not mounted"
         if mount | grep "/dev/mapper/${NAME}" > /dev/null; then
             MOUNTED="mounted"
